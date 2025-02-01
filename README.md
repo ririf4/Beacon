@@ -281,3 +281,7 @@ Output:
 ```
 Diamond Sword enchanted with Sharpness V
 ```
+
+
+
+However, we recommend using the constructor of the event class (better and more concise).
