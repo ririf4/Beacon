@@ -85,7 +85,7 @@ publishing {
 			pom {
 				name.set("Beacon")
 				description.set("A simple event API for Kotlin/Java")
-				url.set("https://github.com/K-Lqrs/Beacon")
+				url.set("https://github.com/ririf4/Beacon")
 				licenses {
 					license {
 						name.set("MIT")
@@ -94,15 +94,15 @@ publishing {
 				}
 				developers {
 					developer {
-						id.set("lars")
-						name.set("Lars")
-						email.set("main@rk4z.net")
+						id.set("ririfa")
+						name.set("RiriFa")
+						email.set("main@ririfa.net")
 					}
 				}
 				scm {
-					connection.set("scm:git:git://github.com/K-Lqrs/Beacon.git")
-					developerConnection.set("scm:git:ssh://github.com/K-Lqrs/Beacon.git")
-					url.set("https://github.com/K-Lqrs/Beacon")
+					connection.set("scm:git:git://github.com/ririf4/Beacon.git")
+					developerConnection.set("scm:git:ssh://github.com/ririf4/Beacon.git")
+					url.set("https://github.com/ririf4/Beacon")
 				}
 				dependencies
 			}
