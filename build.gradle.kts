@@ -1,3 +1,4 @@
+import cl.franciscosolis.sonatypecentralupload.SonatypeCentralUploadTask
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -14,14 +15,15 @@ plugins {
 
 	// Publishing
 	`maven-publish`
-}
-
-val nxProp = Properties().apply {
-	load(FileInputStream(rootProject.file("local/nx.properties")))
+	id("cl.franciscosolis.sonatype-central-upload") version "1.0.3"
 }
 
 group = "net.ririfa"
 version = "1.5.0"
+
+val localProperties = Properties().apply {
+	load(FileInputStream(rootProject.file("local/local.properties")))
+}
 
 repositories {
 	mavenCentral()
@@ -30,9 +32,10 @@ repositories {
 dependencies {
 	dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.9.20")
 
-	implementation("org.reflections:reflections:0.10.2")
+	implementation("io.github.classgraph:classgraph:4.8.179")
 	implementation("org.jetbrains.kotlin:kotlin-reflect:2.1.0")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+	implementation("org.slf4j:slf4j-api:2.1.0-alpha1")
 }
 
 java {
@@ -82,7 +85,7 @@ publishing {
 			pom {
 				name.set("Beacon")
 				description.set("A simple event API for Kotlin/Java")
-				url.set("https://github.com/ririf4/Beacon")
+				url.set("https://github.com/K-Lqrs/Beacon")
 				licenses {
 					license {
 						name.set("MIT")
@@ -91,30 +94,41 @@ publishing {
 				}
 				developers {
 					developer {
-						id.set("ririf4")
-						name.set("RiriFa")
-						email.set("main@ririfa.net")
+						id.set("lars")
+						name.set("Lars")
+						email.set("main@rk4z.net")
 					}
 				}
 				scm {
-					connection.set("scm:git:git://github.com/ririf4/Beacon.git")
-					developerConnection.set("scm:git:ssh://github.com/ririf4/Beacon.git")
-					url.set("https://github.com/ririf4/Beacon")
+					connection.set("scm:git:git://github.com/K-Lqrs/Beacon.git")
+					developerConnection.set("scm:git:ssh://github.com/K-Lqrs/Beacon.git")
+					url.set("https://github.com/K-Lqrs/Beacon")
 				}
 				dependencies
 			}
 		}
 	}
 	repositories {
-		maven {
-			val releasesRepoUrl = uri("https://repo.ririfa.net/maven2-rel/")
-			val snapshotsRepoUrl = uri("https://repo.ririfa.net/maven2-snap/")
-			url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
-
-			credentials {
-				username = nxProp.getProperty("nxUN")
-				password = nxProp.getProperty("nxPW")
-			}
-		}
+		mavenLocal()
 	}
+}
+
+tasks.named<SonatypeCentralUploadTask>("sonatypeCentralUpload") {
+	dependsOn("clean", "jar", "sourcesJar", "javadocJar", "generatePomFileForMavenPublication")
+
+	username = localProperties.getProperty("cu")
+	password = localProperties.getProperty("cp")
+
+	archives = files(
+		tasks.named("jar"),
+		tasks.named("sourcesJar"),
+		tasks.named("javadocJar"),
+	)
+
+	pom = file(
+		tasks.named("generatePomFileForMavenPublication").get().outputs.files.single()
+	)
+
+	signingKey = localProperties.getProperty("signing.key")
+	signingKeyPassphrase = localProperties.getProperty("signing.passphrase")
 }

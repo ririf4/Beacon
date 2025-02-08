@@ -1,10 +1,9 @@
 package net.rk4z.beacon
 
-import org.reflections.Reflections
-import org.reflections.scanners.Scanners
-import org.reflections.util.ConfigurationBuilder
+import io.github.classgraph.ClassGraph
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
@@ -351,22 +350,21 @@ object EventBus {
 
     private fun initializeEventHandlers(packageName: String) {
         try {
-            val reflections = Reflections(
-                ConfigurationBuilder()
-                    .forPackage(packageName)
-                    .addScanners(Scanners.SubTypes)
-            )
+            val scanResult = ClassGraph()
+                .enableClassInfo()
+                .acceptPackages(packageName)
+                .scan()
 
-            val subTypes = reflections.getSubTypesOf(IEventHandler::class.java)
+            val subTypes = scanResult.getSubclasses("net.rk4z.beacon.IEventHandler")
 
             for (subType in subTypes) {
                 try {
-                    subType.getDeclaredConstructor().newInstance().initHandlers()
+                    val clazz = Class.forName(subType.name)
+                    (clazz.getDeclaredConstructor().newInstance() as IEventHandler).initHandlers()
                 } catch (e: Exception) {
                     logger.error("Failed to initialize event handler: ${subType.name}", e)
                 }
             }
-
         } catch (e: Exception) {
             logger.error("Failed to scan package: $packageName", e)
         }

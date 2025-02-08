@@ -3,17 +3,17 @@
 Beacon is a simple, lightweight, and easy-to-use library for creating and calling the event in java and kotlin.
 
 ## Installation
-Latest version: ![Dynamic XML Badge](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Frepo.ririfa.net%2Frepository%2Fmaven-public%2Fnet%2Fririfa%2Fbeacon%2Fmaven-metadata.xml&query=%2Fmetadata%2Fversioning%2Flatest&prefix=v&style=plastic&logo=sonatype&logoColor=56ba5e&label=Nexus&color=56ba5e)
+Latest version: ![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fnet%2Frk4z%2Fbeacon%2Fmaven-metadata.xml&style=plastic&logo=sonatype&label=Central&color=00FF87%20)
 
 
 
 
-You need to add the repository to your build file:
+You need to add the repository to your build file if you're using Gradle:
 
 Gradle(Groovy)
-```gradle
+```groovy
 repositories {
-    maven { url 'https://repo.ririfa.net/' }
+    mavenCentral()
 }
 
 dependencies {
@@ -24,7 +24,7 @@ dependencies {
 Gradle(Kotlin)
 ```kotlin
 repositories { 
-	maven("https://repo.ririfa.net/")
+	mavenCentral()
 }
 
 dependencies {
@@ -34,13 +34,6 @@ dependencies {
 
 Maven
 ```xml
-<repositories>
-    <repository>
-        <id>central</id>
-        <url>https://repo.ririfa.net/</url>
-    </repository>
-</repositories>
-
 <dependency>
     <groupId>net.rk4z</groupId>
     <artifactId>beacon</artifactId>
@@ -172,6 +165,7 @@ Dynamic keys and values can be set for each event, making it easy to customize a
 
 🔹Basic use of metadata
 The method for storing and retrieving information in events is simple.
+※ We still recommend using event class constructor. It is better than a meta-data system, and also it is more readable.
 
 Java:
 ```java
