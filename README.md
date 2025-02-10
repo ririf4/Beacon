@@ -3,10 +3,7 @@
 Beacon is a simple, lightweight, and easy-to-use library for creating and calling the event in java and kotlin.
 
 ## Installation
-Latest version: ![Maven metadata URL](https://img.shields.io/maven-metadata/v?metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fnet%2Frk4z%2Fbeacon%2Fmaven-metadata.xml&style=plastic&logo=sonatype&label=Central&color=00FF87%20)
-
-
-
+Latest version: ![Maven Central Version](https://img.shields.io/maven-central/v/net.ririfa/beacon?style=plastic&logo=sonatype&label=Central)
 
 You need to add the repository to your build file if you're using Gradle:
 
@@ -37,13 +34,13 @@ Maven
 ```xml
 
 <dependency>
-  <groupId>net.ririfanet.ririfa</groupId>
+  <groupId>net.ririfa</groupId>
   <artifactId>beacon</artifactId>
   <version>[Version]</version>
 </dependency>
 ```
 
-Hint: You can find all versions of the library on the [MavenCentral](https://central.sonatype.com/artifact/net.rk4z/beacon/versions).
+Hint: You can find all versions of the library on the [MavenCentral](https://central.sonatype.com/artifact/net.ririfa/beacon/versions).
 
 ## Usage
 
