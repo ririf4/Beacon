@@ -1,3 +1,3 @@
-package net.rk4z.beacon
+package net.ririfa.beacon
 
 class UnsupportedParameterException(message: String) : Exception(message)

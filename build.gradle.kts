@@ -19,7 +19,7 @@ plugins {
 }
 
 group = "net.ririfa"
-version = "1.5.0"
+version = "1.5.1"
 
 val localProperties = Properties().apply {
 	load(FileInputStream(rootProject.file("local/local.properties")))

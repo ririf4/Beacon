@@ -1,6 +1,6 @@
 @file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
-package net.rk4z.beacon
+package net.ririfa.beacon
 
 /**
  * Represents a hook for an event.

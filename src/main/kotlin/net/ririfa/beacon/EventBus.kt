@@ -1,4 +1,4 @@
-package net.rk4z.beacon
+package net.ririfa.beacon
 
 import io.github.classgraph.ClassGraph
 import org.slf4j.Logger
@@ -347,7 +347,6 @@ object EventBus {
         isInitialized = true
     }
 
-
     private fun initializeEventHandlers(packageName: String) {
         try {
             val scanResult = ClassGraph()
@@ -355,7 +354,7 @@ object EventBus {
                 .acceptPackages(packageName)
                 .scan()
 
-            val subTypes = scanResult.getSubclasses("net.rk4z.beacon.IEventHandler")
+            val subTypes = scanResult.getSubclasses(IEventHandler::class.java)
 
             for (subType in subTypes) {
                 try {

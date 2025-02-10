@@ -1,4 +1,4 @@
-package net.rk4z.beacon;
+package net.ririfa.beacon;
 
 /**
  * Functional interface representing a handler for returnable events of type T.

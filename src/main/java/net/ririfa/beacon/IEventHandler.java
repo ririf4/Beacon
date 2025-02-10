@@ -1,4 +1,4 @@
-package net.rk4z.beacon;
+package net.ririfa.beacon;
 
 import java.util.List;
 

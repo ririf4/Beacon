@@ -1,6 +1,6 @@
 @file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
-package net.rk4z.beacon
+package net.ririfa.beacon
 
 /**
  * Represents a generic event.
@@ -10,6 +10,7 @@ abstract class Event {
      * The metadata of the event.
      * This can be used to store additional information about the event.
      */
+    @Deprecated("I think Event class constructor is more useful than this system.")
     val metadata: MutableMap<String, Any?> = mutableMapOf()
 
     /**
@@ -17,6 +18,7 @@ abstract class Event {
      * @param key The key of the metadata.
      * @param value The value of the metadata.
      */
+    @Deprecated("I think Event class constructor is more useful than this system.")
     fun setMeta(key: String, value: Any) = metadata.put(key, value)
 
     /**
@@ -24,6 +26,7 @@ abstract class Event {
      * @param key The key of the metadata.
      * @return The value of the metadata.
      */
+    @Deprecated("I think Event class constructor is more useful than this system.")
     fun getMeta(key: String): Any? = metadata[key]
 
     /**
@@ -32,6 +35,7 @@ abstract class Event {
      * @param default The default value to return if the value is null.
      * @return The value of the metadata or the default value.
      */
+    @Deprecated("I think Event class constructor is more useful than this system.")
     fun <T> getMetaOrDefault(key: String, default: T): T = metadata[key] as? T ?: default
 }
 

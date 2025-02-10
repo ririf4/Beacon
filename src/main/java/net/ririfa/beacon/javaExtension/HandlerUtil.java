@@ -1,9 +1,9 @@
-package net.rk4z.beacon.javaExtension;
+package net.ririfa.beacon.javaExtension;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
 import kotlin.jvm.functions.Function1;
-import net.rk4z.beacon.*;
+import net.ririfa.beacon.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 

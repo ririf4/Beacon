@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.rk4z:beacon:[Version]'
+    implementation 'net.ririfa:beacon:[Version]'
 }
 ```
 
@@ -28,16 +28,18 @@ repositories {
 }
 
 dependencies {
-    implementation("net.rk4z:beacon:[Version]")
+    implementation("net.ririfa:beacon:[Version]")
 }
 ```
 
 Maven
+
 ```xml
+
 <dependency>
-    <groupId>net.rk4z</groupId>
-    <artifactId>beacon</artifactId>
-    <version>[Version]</version>
+  <groupId>net.ririfanet.ririfa</groupId>
+  <artifactId>beacon</artifactId>
+  <version>[Version]</version>
 </dependency>
 ```
 
@@ -123,7 +125,7 @@ Java:
 ```java
 public class Main {
     public static void main(String[] args) {
-        EventBus.initialize(new String[]{"net.rk4z.example"});
+        EventBus.initialize(new String[]{"net.ririfa.example"});
         
         EventBus.postAsync(new MyEvent("Hello from Java!"));
         
@@ -137,7 +139,7 @@ Kotlin:
 
 ```kotlin
 fun main() {
-    EventBus.initialize("net.rk4z.example")
+    EventBus.initialize("net.ririfa.example")
     
     EventBus.postAsync(MyEvent("Hello from Kotlin!"))
     
