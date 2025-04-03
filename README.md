@@ -3,14 +3,15 @@
 Beacon is a simple, lightweight, and easy-to-use library for creating and calling the event in java and kotlin.
 
 ## Installation
-Latest version: ![Maven Central Version](https://img.shields.io/maven-central/v/net.ririfa/beacon?style=plastic&logo=sonatype&label=Central)
+Latest version: ![Dynamic XML Badge](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Frepo.ririfa.net%2Frepository%2Fmaven-public%2Fnet%2Fririfa%2Fbeacon%2Fmaven-metadata.xml&query=%2Fmetadata%2Fversioning%2Flatest&style=plastic&logo=sonatype&label=Nexus)
+
 
 You need to add the repository to your build file if you're using Gradle:
 
 Gradle(Groovy)
 ```groovy
 repositories {
-    mavenCentral()
+    maven { url "https://repo.ririfa.net/maven2" }
 }
 
 dependencies {
@@ -20,8 +21,8 @@ dependencies {
 
 Gradle(Kotlin)
 ```kotlin
-repositories { 
-	mavenCentral()
+repositories {
+    maven("https://repo.ririfa.net/maven2")
 }
 
 dependencies {
@@ -32,6 +33,12 @@ dependencies {
 Maven
 
 ```xml
+<repositories>
+  <repository>
+    <id>ririfa-repo</id>
+    <url>https://repo.ririfa.net/maven2</url>
+  </repository>
+</repositories>
 
 <dependency>
   <groupId>net.ririfa</groupId>
@@ -40,7 +47,7 @@ Maven
 </dependency>
 ```
 
-Hint: You can find all versions of the library on the [MavenCentral](https://central.sonatype.com/artifact/net.ririfa/beacon/versions).
+Hint: You can find all versions of the library on the [RiriFa Repo](https://repo.ririfa.net/service/rest/repository/browse/maven-public/net/ririfa/beacon/).
 
 ## Usage
 
@@ -80,6 +87,9 @@ class MyReturnableEvent(val message: String) : ReturnableEvent<String>()
 
 Java:
 ```java
+import static net.ririfa.beacon.javaExtension.HandlerUtil.handler;
+import static net.ririfa.beacon.javaExtension.HandlerUtil.returnableHandler;
+
 public class MyEventListener implements IEventHandler {
     @Override
     public void initHandlers() {
@@ -88,7 +98,7 @@ public class MyEventListener implements IEventHandler {
             System.out.println("Thread: " + Thread.currentThread().getName());
         });
         
-        handler(this, MyReturnableEvent.class, event -> {
+        returnableHandeler(this, MyReturnableEvent.class, event -> {
             System.out.println("This is a handler for MyReturnableEventJava: " + event.getMessage());
             System.out.println("Thread: " + Thread.currentThread().getName());
             return "Hello from returnable handler!";
@@ -105,8 +115,8 @@ class MyEventListener : IEventHandler {
             println("This is a handler for MyEvent: ${it.message}")
             println("Thread: ${Thread.currentThread().name}")
         }
-        
-        handler<MyReturnableEvent> {
+
+        returnableHandeler<MyReturnableEvent> {
             println("This is a handler for MyReturnableEvent: ${it.message}")
             println("Thread: ${Thread.currentThread().name}")
             "Hello from returnable handler!"

@@ -125,12 +125,25 @@ public class HandlerUtil {
         return returnableHandler(instance, eventType, () -> true, false, Priority.NORMAL, handler, null);
     }
 
+    /**
+     * Converts a Java Supplier into a Kotlin-style Function0.
+     *
+     * @param supplier the Java Supplier to be converted; must not be null
+     * @return a Kotlin-style Function0 that wraps the given Supplier
+     */
     @NotNull
     @Contract(pure = true)
     static <T> Function0<T> toKotlinFunction0(@NotNull Supplier<T> supplier) {
         return supplier::get;
     }
 
+    /**
+     * Converts a Handler instance into a Kotlin Function1 instance.
+     *
+     * @param handler the Handler instance to be converted; must not be null.
+     * @param <T> the type of the Event that the Handler processes.
+     * @return a Kotlin Function1 instance that wraps the given Handler.
+     */
     @NotNull
     @Contract(pure = true)
     static <T extends Event> Function1<T, Unit> toKotlinFunction1(Handler<T> handler) {
@@ -140,10 +153,15 @@ public class HandlerUtil {
         };
     }
 
+    /**
+     * Converts a {@link ReturnableHandler} into a Kotlin {@link Function1}.
+     *
+     * @param handler the handler to be converted, which processes input events of type {@code T} and returns a result of type {@code R}. Must not be null.
+     * @return a Kotlin {@link Function1} that wraps the provided handler and invokes its {@code handle} method.
+     */
     @NotNull
     @Contract(pure = true)
     static <T extends ReturnableEvent<R>, R> Function1<T, R> toKotlinFunction1(@NotNull ReturnableHandler<T, R> handler) {
         return handler::handle;
     }
-
 }

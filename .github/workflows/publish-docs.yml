@@ -1,0 +1,67 @@
+name: Build and PR Dokka to docs repo
+
+on:
+  push:
+    branches: [ '**' ]
+  workflow_dispatch:
+
+jobs:
+  publish-docs:
+    runs-on: ubuntu-latest
+
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x ./gradlew
+
+      - name: Generate Dokka HTML
+        run: ./gradlew dokkaGenerate
+
+      - name: Debug output path
+        run: |
+          echo "Listing all possible Dokka output dirs..."
+          ls -la build/
+          ls -la build/dokka/
+
+      - name: Clone docs repo
+        run: |
+          git clone https://x-access-token:${{ secrets.PAT }}@github.com/ririf4/docs.git pushrepo
+          cd pushrepo
+          git checkout -B docs-${{ github.event.repository.name }}
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Copy docs
+        run: |
+          mkdir -p ./pushrepo/${{ github.event.repository.name }}
+          cp -r build/dokka/html/* ./pushrepo/${{ github.event.repository.name }}/
+
+      - name: Commit and push
+        run: |
+          cd pushrepo
+          git add .
+          git commit -m "docs: update for ${{ github.event.repository.name }}"
+          git push -f origin docs-${{ github.event.repository.name }}
+
+      - name: Create PR using GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+        run: |
+          cd pushrepo
+          gh pr create \
+            --repo ririf4/docs \
+            --base main \
+            --head docs-${{ github.event.repository.name }} \
+            --title "Update docs for ${{ github.event.repository.name }}" \
+            --body "This PR updates the Dokka docs for ${{ github.event.repository.name }}"
