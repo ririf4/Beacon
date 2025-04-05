@@ -71,8 +71,10 @@ jobs:
               issue_state: $issue_state
             }'
           )
+          
+          ENCODED_PAYLOAD=$(echo "$PAYLOAD" | base64 -w 0)
 
           gh workflow run github-to-discord.yml \
             --repo ririf4/Actions \
             --ref main \
-            -f payload="$PAYLOAD"
+            -f payload="$ENCODED_PAYLOAD"
