@@ -98,7 +98,7 @@ public class MyEventListener implements IEventHandler {
             System.out.println("Thread: " + Thread.currentThread().getName());
         });
         
-        returnableHandeler(this, MyReturnableEvent.class, event -> {
+        returnableHandler(this, MyReturnableEvent.class, event -> {
             System.out.println("This is a handler for MyReturnableEventJava: " + event.getMessage());
             System.out.println("Thread: " + Thread.currentThread().getName());
             return "Hello from returnable handler!";
@@ -116,7 +116,7 @@ class MyEventListener : IEventHandler {
             println("Thread: ${Thread.currentThread().name}")
         }
 
-        returnableHandeler<MyReturnableEvent> {
+        returnableHandler<MyReturnableEvent> {
             println("This is a handler for MyReturnableEvent: ${it.message}")
             println("Thread: ${Thread.currentThread().name}")
             "Hello from returnable handler!"
