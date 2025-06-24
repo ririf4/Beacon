@@ -34,8 +34,6 @@ public class HandlerUtil {
             Handler<T> handler,
             Long timeout
     ) {
-        Class<?> clazz = instance.getClass();
-
         Function0<Boolean> kc = toKotlinFunction0(condition);
 
         EventBus.registerEventHook(
@@ -90,8 +88,6 @@ public class HandlerUtil {
             ReturnableHandler<T, R> handler,
             Long timeout
     ) {
-        Class<?> clazz = instance.getClass();
-
         Function0<Boolean> kc = toKotlinFunction0(condition);
 
         EventBus.registerReturnableEventHook(

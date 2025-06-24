@@ -58,9 +58,34 @@ object EventBus {
 
         if (handlers.containsKey(handlerKey).not()) {
             handlers[handlerKey] = eventHook as ReturnableEventHook<out ReturnableEvent<*>, *>
-            handlers.values.sortedBy { it.priority.level }
+
+            val sorted = handlers.toList().sortedBy { it.second.priority.level }
+            handlers.clear()
+            for ((k, v) in sorted) {
+                handlers[k] = v
+            }
+
             logger.info("Registered returnable event hook for ${eventClass.simpleName} with priority ${eventHook.priority}")
         }
+    }
+
+    /**
+     * Unregisters an event hook for a specific event class.
+     */
+    @JvmStatic
+    fun <T : Event> unregisterEventHook(eventClass: Class<T>, eventHook: EventHook<T>) {
+        val handlers = registry[eventClass] ?: return
+        handlers.remove(eventHook as EventHook<in Event>)
+    }
+
+    /**
+     * Unregisters a returnable event hook for a specific event class.
+     */
+    @JvmStatic
+    fun <T : ReturnableEvent<R>, R> unregisterReturnableEventHook(eventClass: Class<T>, eventHook: ReturnableEventHook<T, R>) {
+        val handlers = returnableRegistry[eventClass] ?: return
+        val handlerKey = eventHook.handlerClass::class.simpleName + eventHook.priority.level
+        handlers.remove(handlerKey)
     }
 
     /**
@@ -381,6 +406,7 @@ object EventBus {
             asyncExecutor.shutdownNow()
         }
         registry.clear()
+        returnableRegistry.clear()
         logger.info("EventBus shutdown")
     }
 }
